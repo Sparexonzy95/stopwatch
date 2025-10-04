@@ -1,88 +1,75 @@
-// Get DOM elements
-const display = document.getElementById('display');
-const startBtn = document.getElementById('startBtn');
-const stopBtn = document.getElementById('stopBtn');
-const resetBtn = document.getElementById('resetBtn');
-const lapBtn = document.getElementById('lapBtn');
-const laps = document.getElementById('laps');
+let display = document.getElementById("display");
+let startBtn = document.getElementById("start");
+let stopBtn = document.getElementById("stop");
+let resetBtn = document.getElementById("reset");
+let lapBtn = document.getElementById("lap");
+let lapsList = document.getElementById("laps");
+let themeSwitch = document.getElementById("themeSwitch");
 
-// Stopwatch state
-let startTime = 0;
-let elapsedTime = 0;
-let timerInterval = null;
+let timer = null;
+let [hours, minutes, seconds, milliseconds] = [0, 0, 0, 0];
 let isRunning = false;
-let lapCount = 0;
 
-// Format time to HH:MM:SS.mmm
-function formatTime(ms) {
-    const hours = Math.floor(ms / 3600000);
-    ms %= 3600000;
-    const minutes = Math.floor(ms / 60000);
-    ms %= 60000;
-    const seconds = Math.floor(ms / 1000);
-    const milliseconds = ms % 1000;
-
-    return (
-        `${hours.toString().padStart(2, '0')}:` +
-        `${minutes.toString().padStart(2, '0')}:` +
-        `${seconds.toString().padStart(2, '0')}.` +
-        `${milliseconds.toString().padStart(3, '0')}`
-    );
-}
-
-// Update the display
+// Update display
 function updateDisplay() {
-    elapsedTime = Date.now() - startTime;
-    display.textContent = formatTime(elapsedTime);
+  let h = hours < 10 ? "0" + hours : hours;
+  let m = minutes < 10 ? "0" + minutes : minutes;
+  let s = seconds < 10 ? "0" + seconds : seconds;
+  let ms = milliseconds < 100 ? (milliseconds < 10 ? "00" + milliseconds : "0" + milliseconds) : milliseconds;
+  display.textContent = `${h}:${m}:${s}.${ms}`;
 }
 
-// Start the stopwatch
-startBtn.addEventListener('click', () => {
-    if (!isRunning) {
-        startTime = Date.now() - elapsedTime;
-        timerInterval = setInterval(updateDisplay, 10); // Update every 10ms for milliseconds
-        isRunning = true;
-        startBtn.disabled = true;
-        stopBtn.disabled = false;
-        lapBtn.disabled = false;
-    }
+// Timer function
+function runTimer() {
+  milliseconds += 10;
+  if (milliseconds === 1000) {
+    milliseconds = 0;
+    seconds++;
+  }
+  if (seconds === 60) {
+    seconds = 0;
+    minutes++;
+  }
+  if (minutes === 60) {
+    minutes = 0;
+    hours++;
+  }
+  updateDisplay();
+}
+
+// Start
+startBtn.addEventListener("click", function () {
+  if (!isRunning) {
+    timer = setInterval(runTimer, 10);
+    isRunning = true;
+  }
 });
 
-// Stop the stopwatch
-stopBtn.addEventListener('click', () => {
-    if (isRunning) {
-        clearInterval(timerInterval);
-        isRunning = false;
-        startBtn.disabled = false;
-        stopBtn.disabled = true;
-    }
+// Stop
+stopBtn.addEventListener("click", function () {
+  clearInterval(timer);
+  isRunning = false;
 });
 
-// Reset the stopwatch
-resetBtn.addEventListener('click', () => {
-    clearInterval(timerInterval);
-    isRunning = false;
-    elapsedTime = 0;
-    startTime = 0;
-    display.textContent = '00:00:00.000';
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-    lapBtn.disabled = true;
-    laps.innerHTML = ''; // Clear lap times
-    lapCount = 0;
+// Reset
+resetBtn.addEventListener("click", function () {
+  clearInterval(timer);
+  [hours, minutes, seconds, milliseconds] = [0, 0, 0, 0];
+  updateDisplay();
+  isRunning = false;
+  lapsList.innerHTML = "";
 });
 
-// Record lap time
-lapBtn.addEventListener('click', () => {
-    if (isRunning) {
-        lapCount++;
-        const lapTime = formatTime(elapsedTime);
-        const lapElement = document.createElement('div');
-        lapElement.textContent = `Lap ${lapCount}: ${lapTime}`;
-        laps.prepend(lapElement); // Add new lap at the top
-    }
+// Lap
+lapBtn.addEventListener("click", function () {
+  if (isRunning) {
+    let li = document.createElement("li");
+    li.textContent = display.textContent;
+    lapsList.appendChild(li);
+  }
 });
 
-// Initialize button states
-stopBtn.disabled = true;
-lapBtn.disabled = true;
+// Theme Toggle
+themeSwitch.addEventListener("change", function () {
+  document.body.classList.toggle("dark");
+});

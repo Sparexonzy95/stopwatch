@@ -1,0 +1,120 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Main stopwatch container using flexbox */
+.stopwatch-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Timer display styling */
+.display {
+    font-size: 2.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #222;
+    color: #0f0;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Button container */
+.controls {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#startBtn {
+    background-color: #28a745;
+    color: white;
+}
+
+#startBtn:hover {
+    background-color: #218838;
+}
+
+#stopBtn {
+    background-color: #dc3545;
+    color: white;
+}
+
+#stopBtn:hover {
+    background-color: #c82333;
+}
+
+#resetBtn {
+    background-color: #007bff;
+    color: white;
+}
+
+#resetBtn:hover {
+    background-color: #0069d9;
+}
+
+#lapBtn {
+    background-color: #ffc107;
+    color: black;
+}
+
+#lapBtn:hover {
+    background-color: #e0a800;
+}
+
+/* Lap list styling */
+.laps {
+    max-height: 150px;
+    overflow-y: auto;
+    text-align: left;
+    padding: 10px;
+}
+
+.laps div {
+    font-size: 1rem;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .stopwatch-container {
+        padding: 15px;
+    }
+
+    .display {
+        font-size: 1.8rem;
+    }
+
+    button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}

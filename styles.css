@@ -1,121 +1,229 @@
-/* Reset */
+/* ===========================
+   BASIC PAGE RESET
+   This removes default browser margins and paddings,
+   ensuring consistent layout spacing everywhere.
+=========================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Default Light Theme */
+/* ===========================
+     DEFAULT (LIGHT) THEME STYLING
+   - Full height screen
+   - Centered content (both vertically & horizontally)
+   - Red background as main theme color
+   - White text color for contrast
+   - Smooth color transition when switching themes
+   - Relative positioning to place header easily
+=========================== */
 body {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #a32622;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   transition: background-color 0.3s, color 0.3s;
+  position: relative;
 }
 
+/* ===========================
+   HEADER SECTION (Top-right "About" text)
+   Positioned absolutely at the top right corner of the page.
+=========================== */
+.header {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+/*  ===========================
+     "About" text styling
+   - Slightly large and bold for visibility
+   - Small letter spacing for a neat, digital feel
+   - No pointer change since it’s just text
+=========================== */
+.about-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: default;
+}
+
+/* ===========================
+   MAIN CONTAINER
+   Centers everything and limits width for a clean layout
+=========================== */
 .container {
   text-align: center;
   width: 90%;
-  max-width: 400px;
+  max-width: 700px;
 }
 
-/* Title */
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
 
-/* Timer Display */
+
+/* ===========================
+   TIMER DISPLAY
+   Large digital-style numbers with spacing between digits
+=========================== */
 #display {
-  font-size: 3rem;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
+  font-size: 6rem;
+  letter-spacing: 4px;
+  margin-bottom: 50px;
+  font-weight: bold;
 }
 
-/* Buttons Layout */
+/* ===========================
+     BUTTON CONTAINER
+   - Centers all buttons
+   - Adds gap between them
+   - Allows wrapping on small screens
+=========================== */
 .buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 25px;
+  margin-bottom: 40px;
 }
 
-/* Buttons */
+/* ===========================
+     BUTTON DESIGN
+   - Yellow buttons with red text to match the theme
+   - No border for a flat look
+   - Pill shape using large border-radius
+   - Slight shadow for depth
+   - Hover effect for interaction feedback
+=========================== */
 button {
   background-color: #fddc6c;
   color: #a32622;
   border: none;
-  border-radius: 8px;
-  padding: 12px 25px;
-  font-size: 1rem;
+  border-radius: 999px; /* Full oval shape */
+  padding: 20px 70px;
+  font-size: 1.5rem;
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s, background-color 0.3s;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
 }
 
+/*  =========================== 
+    Hover state:
+   - Lightens the button color
+   - Slightly lifts it upward to simulate a press
+=========================== */
 button:hover {
   background-color: #ffe071;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
-/* Lap list */
+/* ===========================
+   THEME TOGGLE (BONUS FEATURE)
+   - Positioned above buttons
+   - Provides text label for light/dark mode
+=========================== */
+.theme-toggle {
+  margin-bottom: 30px;
+  font-size: 1.2rem;
+}
+
+/* Adds a bit of space between icon/text inside the toggle */
+.theme-toggle span {
+  margin-left: 10px;
+}
+
+/* ===========================
+   LAP LIST (BONUS FEATURE)
+   - Displays recorded lap times
+   - Scrollable if too long
+   - Soft transparent background for each lap item
+=========================== */
 #laps {
   list-style: none;
-  margin-top: 10px;
-  max-height: 200px;
+  margin-top: 20px;
+  max-height: 250px;
   overflow-y: auto;
   padding: 0;
+  font-size: 1.3rem;
 }
 
 #laps li {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 5px 10px;
-  margin: 5px 0;
-  border-radius: 5px;
-  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 15px;
+  margin: 8px 0;
+  border-radius: 8px;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-  margin-top: 15px;
-}
-
-.theme-toggle span {
-  margin-left: 8px;
-}
-
-/* Dark Theme */
+/* ===========================
+   DARK THEME MODE
+   Activated by adding `.dark` class to <body>.
+   Changes background, text, and button colors accordingly.
+=========================== */
 body.dark {
   background-color: #121212;
   color: #f5f5f5;
 }
 
+/*  ===========================
+   Dark mode button styles:
+   - Dark grey buttons with white text
+   - Keeps same pill shape
+=========================== */
 body.dark button {
   background-color: #444;
   color: #f5f5f5;
+  border-radius: 999px;
 }
 
+/*  ===========================
+Hover style for dark mode buttons 
+ ===========================*/
 body.dark button:hover {
   background-color: #555;
 }
 
+/*  ===========================
+ Dark mode lap items use slightly brighter transparency
+  =========================== */
 body.dark #laps li {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-  #display {
-    font-size: 2.5rem;
+/* ===========================
+   RESPONSIVE DESIGN
+   Ensures the stopwatch scales nicely on small devices
+=========================== */
+@media (max-width: 600px) {
+  /* Slightly reduce title size */
+  h1 {
+    font-size: 3rem;
   }
 
+  /* ===========================
+   Shrink timer display 
+    =========================== */
+  #display {
+    font-size: 4rem;
+  }
+
+  /* ===========================
+   Make buttons smaller but still oval
+    =========================== */
   button {
-    padding: 10px 20px;
-    font-size: 0.9rem;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+  }
+
+  /*
+   ===========================
+    Adjust about text size on mobile 
+     ===========================*/
+  .about-text {
+    font-size: 1.2rem;
   }
 }
